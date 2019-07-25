@@ -1,55 +1,49 @@
 import React from 'react';
 import './App.css';
-import server from '../server';
-import Sider from './Sider';
+import SiderMenu from './SiderMenu';
 import { Layout } from 'antd';
 import HeadMenu from './HeadMenu';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Store from "store";
+import Life from "../Components/Life";
+import Study from "../Components/Study";
+import Technology from "../Components/Technology";
+import Comprehensive from "../Components/Comprehensive";
+import Info from "../Components/Info";
+import Friends from "../Components/Friends";
+import Notification from "../Components/Notification";
+import Footer from "./Footer";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: '',
-      password: '',
-    };
-    this.changeName = this.changeName.bind(this);
-    this.changePassword = this.changePassword.bind(this);
-    this.httpRequest = this.httpRequest.bind(this);
-  }
-
-  changeName(e) {
-    this.setState({ username: e.target.value });
-  }
-
-  changePassword(e) {
-    this.setState({ password: e.target.value });
-  }
-
-  httpRequest() {
-    server.post('auth/login', {
-      username: this.state.username,
-      password: this.state.password
-    }).then(response => {
-      console.log(response.status)
-    }, error => {
-      console.log(error.status);
-    });
   }
 
   render() {
-    const { Content, Footer } = Layout;
-
+  
     return (
-      <div style={{ width:"100%", height:"100vh" }}>
-        <Layout className="mainContainer">
-          { this.props.logined ? <Sider /> : null }
-          <Layout>
-              { this.props.logined ? null : <HeadMenu /> }
-              <Content>Content</Content>
-              <Footer>Footer</Footer>
-          </Layout>
-        </Layout>
-      </div>
+      <Router>
+        <div style={{ width:"100%", height:"100vh" }}>
+            <Layout className="mainContainer">
+              { Store.get("auth").logined ? <SiderMenu /> : null }
+              <Layout>
+                  { Store.get("auth").logined ? null : <HeadMenu /> }
+                  <Layout.Content>
+                    <Switch>
+                      <Route exact path="/" component={ Comprehensive } />
+                      <Route path="/life" component={ Life } />
+                      <Route path="/technology" component={ Technology } />
+                      <Route path="/study" component={ Study } />
+                      <Route path="/info" component={ Info } />
+                      <Route path="/friends" component={ Friends } />
+                      <Route path="/notification" component={ Notification } />
+                    </Switch>
+                  </Layout.Content>
+                  <Layout.Footer><Footer/></Layout.Footer>
+              </Layout>
+            </Layout>
+        </div>
+        </Router>
     )
   }
 }
