@@ -33,7 +33,7 @@ class Register extends React.Component {
             username: this.state.username,
         }).then(response => {
             message.success("注册成功");
-            Store.set('auth', {Api_Token: response.data.token})
+            Store.set('Api_Token', response.data.token)
             window.location.reload();
         }).catch(error => {
             message.error(error.response.data.message);

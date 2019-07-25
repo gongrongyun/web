@@ -17,7 +17,7 @@ ReactDOM.render((
 function ready() {
     return new Promise((resolve, reject) => {
         server.get("/auth/auth", {
-            headers: { "Api_Token": Store.get('auth').Api_Token}
+            headers: { "Api_Token": Store.get('Api_Token')}
         }).then(response => {
             Store.set('user', { 
                 username: response.data.username,
@@ -27,9 +27,7 @@ function ready() {
                 roleId: response.data.roleId,
                 introduction: response.data.introduction,
             });
-            Store.set('auth', {
-                logined: true,
-            })
+            Store.set('logined', true);
             resolve();
         }).catch(error => {
             reject();
@@ -41,7 +39,4 @@ ready().then(() => {
     ReactDOM.render(<App />, document.getElementById("root"))
 }).catch(()=>{
     ReactDOM.render(<App />, document.getElementById("root"))
-    Store.set('auth', {
-        logined: false,
-    })
 });

@@ -25,9 +25,9 @@ class App extends React.Component {
       <Router>
         <div style={{ width:"100%", height:"100vh" }}>
             <Layout className="mainContainer">
-              { Store.get("auth").logined ? <SiderMenu /> : null }
+              { Store.get('logined') ? <SiderMenu /> : null }
               <Layout>
-                  { Store.get("auth").logined ? null : <HeadMenu /> }
+                  { Store.get('logined') ? null : <HeadMenu /> }
                   <Layout.Content>
                     <Switch>
                       <Route exact path="/" component={ Comprehensive } />

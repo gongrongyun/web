@@ -7,12 +7,18 @@ class Info extends React.Component {
         super(props);
     }
 
+    logout = () => {
+        Store.set('Api_Token', null);
+        Store.set('logined', false);
+        window.location.href = "/";
+    }
+
     render() {
         return (
             <Layout>
                 <Button 
                     type="danger"
-                    onClick={ () => {Store.set('auth', {Api_Token: null}, window.location.href = "/")} }
+                    onClick={ this.logout }
                 >Logout</Button>
             </Layout>
         )
