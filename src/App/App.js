@@ -5,13 +5,13 @@ import { Layout } from 'antd';
 import HeadMenu from './HeadMenu';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Store from "store";
-import Life from "../Components/Life";
-import Study from "../Components/Study";
-import Technology from "../Components/Technology";
-import Comprehensive from "../Components/Comprehensive";
-import Info from "../Components/Info";
-import Friends from "../Components/Friends";
-import Notification from "../Components/Notification";
+import Life from "../Components/Tourist/Life";
+import Study from "../Components/Tourist/Study";
+import Technology from "../Components/Tourist/Technology";
+import Comprehensive from "../Components/Tourist/Comprehensive";
+import Info from "../Components/User/Info";
+import Friends from "../Components/User/Friends";
+import Notification from "../Components/User/Notification";
 import Footer from "./Footer";
 
 class App extends React.Component {
