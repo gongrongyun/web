@@ -32,7 +32,7 @@ class Login extends React.Component {
             Store.set("auth", {logined: true});
             Store.set('auth', {Api_Token: response.data.token});
 
-            window.location.reload();
+            window.location.href = "/";
         }).catch(error => {
             message.error((error.response && error.response.data.message) || "出错了哦");
             this.setState({

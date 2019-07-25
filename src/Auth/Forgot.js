@@ -3,6 +3,7 @@ import { Form, Input, Icon, Button, message, Row, Col } from "antd";
 import { Link } from "react-router-dom";
 import server from "../server";
 import CryptoJS from "crypto-js";
+import VerifyCode from "./VerifyCode";
 
 class Forgot extends React.Component {
     constructor(props) {
@@ -12,11 +13,7 @@ class Forgot extends React.Component {
             password: '',
             repeatPassword: '',
             code: '',
-            disable: true,
-            loading: false,
-            time: 60,
         }
-        this.parrent = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+.([A-Za-z]{2,4})$/;
     }
 
     handleSubmit = () => {
@@ -49,37 +46,6 @@ class Forgot extends React.Component {
         }
     }
 
-    getCode = () => {
-        this.setState({loading: true});
-        const currentTime = new Date().getTime();
-        this.timeId = setInterval(() => {
-            if(this.state.time > 0) {
-                this.setState({time: 60 - Math.floor((new Date().getTime() - currentTime)/1000)});
-            } 
-            else {
-                clearInterval(this.timeId);
-                this.setState({loading: false});
-                this.setState({time: 60});
-            }
-        }, 1000);
-        // server.post("/auth/code", {
-        //     email: this.state.email
-        // }).then(response => {
-        //     message.success("Code has been sent to your email !");
-        // }).catch(error => {
-        //     message.error("There is something wrong !");
-        // })
-    }
-
-    verifyEmail = (e) => {
-        this.setState({email: e.target.value});
-        if(this.parrent.test(e.target.value)) {
-            this.setState({disable: false});
-        } else {
-            this.setState({disable: true});
-        }
-    }
-
     render() {
         return (
             <Form>
@@ -87,30 +53,18 @@ class Forgot extends React.Component {
                     <Input 
                         prefix={ <Icon type="mail" style={{ color:"rgba(0, 0, 0, 0.25)" }} /> }
                         placeholder="Email-adress"
-                        onChange={ this.verifyEmail }
+                        onChange={ e => {this.setState({email: e.target.value})} }
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Row gutter={8}>
-                        <Col span={14}>
-                            <Input 
-                                prefix={ <Icon type="safty" style={{ color:"rgba(0, 0, 0, 0.25)" }} /> }
-                                placeholder="Verify code"
-                                onChange={ e => {this.setState({code: e.target.value})} }
-                            />
-                        </Col>
-                        <Col span={8}>
-                            <Button
-                                type="primary"
-                                disabled={ this.state.disable }
-                                loading={ this.state.loading }
-                                onClick={ this.getCode }
-                            >{this.state.loading ? "Try after " + this.state.time + "s" : "Get Code"}</Button>
-                        </Col>
-                    </Row>
+                    <VerifyCode
+                        email={ this.state.email }
+                        onChange={ code => {this.setState({code: code})} }
+                    />
                 </Form.Item>
                 <Form.Item>
                     <Input
+                        
                         prefix={ <Icon type="lock" style={{ color:"rgba(0, 0, 0, 0.25)" }} /> }
                         placeholder="Password"
                         onChange={ e => {this.setState({password: e.target.value})} }
