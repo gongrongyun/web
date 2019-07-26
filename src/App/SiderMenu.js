@@ -10,33 +10,57 @@ class Sider extends React.Component {
         this.state = {
             collapsed: false,
         }
-        this.onCollapse = this.onCollapse.bind(this);
+        this.menuItems = [
+            { key: `${Store.get('auth').role.alias}/info`, icon: "user", description: "个人中心" },
+            { key: `${Store.get('auth').role.alias}/friend`, icon: "team", description: "我的好友" },
+            { key: `${Store.get('auth').role.alias}/notification`, icon: "notification", description: "消息中心" },
+        ];
     }
 
     onCollapse = collapsed => {
         this.setState({ collapsed })
     }
 
-    render() {
-        const MentItems = [
-            { key: 1, icon: "user", description: "个人中心", url: "/info" },
-            { key: 2, icon: "team", description: "我的好友", url: "/friends" },
-            { key: 3, icon: "notification", description: "消息中心", url: "/notification" },
-        ];
+    redirect = ({key}) => {
+        window.location.href = `/${key}`;
+    }
 
+    defaultSelectedKey = () => {
+        if(window.location.href === `/${Store.get('auth').role.alias}`) {
+            return `${Store.get('auth').role.alias}/comprehensive`;
+        }
+        const menu = this.menuItems.find(o => window.location.href.match(o.key)) || {};
+        if (!this.isVisibleForCurrentRoute(menu)) {
+        window.location.href = `/${Store.get('auth').role.alias}`;
+        }
+        return menu.key;
+    }
+
+    isVisibleForCurrentRoute = (o) => {
+        const visibility = o.visibility || [];
+        if (visibility.length === 0) {
+            return true;
+        }
+        return visibility.indexOf(Store.get('auth').role.alias) !== -1;
+    }
+
+    render() {
         return (
             <Layout.Sider theme="dark" collapsible collapsed={ this.state.collapsed } onCollapse={ this.onCollapse }>
-                <div className="sider-logo">
-                    <img alt={ "avatar" } src={ this.props.avatar || img } className="sider-avatar"/>
-                    <span>{ this.state.collapsed ? "" : Store.get('user').username }</span>
+                <div className="sider-logo" >
+                    <img alt={ "avatar" } src={ Store.get('auth').avatar || img } className="sider-avatar"/>
+                    <span>{ this.state.collapsed ? "" : Store.get('auth').username }</span>
                 </div>
-                <Menu mode="inline" theme="dark">
-                    { MentItems.map((item) => (
+                <Menu 
+                    mode="inline" 
+                    theme="dark"
+                    defaultSelectedKeys={ [this.defaultSelectedKey() ]}
+                    onClick={ this.redirect }
+                >
+                    { this.menuItems.map((item) => (
                         <Menu.Item key={ item.key }>
-                            <Link to={ item.url }>
-                                <Icon type={ item.icon }></Icon>
-                                <span>{ item.description }</span>
-                            </Link>
+                            <Icon type={ item.icon }></Icon>
+                            <span>{ item.description }</span>
                         </Menu.Item>
                     )) }
                 </Menu>

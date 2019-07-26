@@ -2,16 +2,10 @@ import React from 'react';
 import './App.css';
 import SiderMenu from './SiderMenu';
 import { Layout } from 'antd';
-import HeadMenu from './HeadMenu';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import UserRouter from "../User";
+import AdminRouter from "../Admin";
 import Store from "store";
-import Life from "../Components/Tourist/Life";
-import Study from "../Components/Tourist/Study";
-import Technology from "../Components/Tourist/Technology";
-import Comprehensive from "../Components/Tourist/Comprehensive";
-import Info from "../Components/User/Info";
-import Friends from "../Components/User/Friends";
-import Notification from "../Components/User/Notification";
 import Footer from "./Footer";
 
 class App extends React.Component {
@@ -27,19 +21,16 @@ class App extends React.Component {
             <Layout className="mainContainer">
               { Store.get('logined') ? <SiderMenu /> : null }
               <Layout>
-                  { Store.get('logined') ? null : <HeadMenu /> }
                   <Layout.Content>
                     <Switch>
-                      <Route exact path="/" component={ Comprehensive } />
-                      <Route path="/life" component={ Life } />
-                      <Route path="/technology" component={ Technology } />
-                      <Route path="/study" component={ Study } />
-                      <Route path="/info" component={ Info } />
-                      <Route path="/friends" component={ Friends } />
-                      <Route path="/notification" component={ Notification } />
+                      <Route exact path="/" component={ () => <Redirect to={ Store.get('auth').role.alias} /> } />
+                      <Route path="/user" component={ UserRouter } />
+                      <Route path="/admin" component={ AdminRouter } />
                     </Switch>
                   </Layout.Content>
-                  <Layout.Footer><Footer/></Layout.Footer>
+                  <Layout.Footer>
+                    <Footer/>
+                  </Layout.Footer>
               </Layout>
             </Layout>
         </div>

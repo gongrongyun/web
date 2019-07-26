@@ -5,6 +5,7 @@ import server from "./server";
 import App from './App/App';
 import { Spin } from 'antd';
 import Store from "store";
+import AppUnLogin from './App/AppUnLogin';
 
 ReactDOM.render((
     <Spin size="large">
@@ -12,19 +13,17 @@ ReactDOM.render((
     </Spin>
 ), document.getElementById("root"));
 
-// const loginRole = ['admin', 'user', 'tourist'];
-
-function ready() {
+const ready = () => {
     return new Promise((resolve, reject) => {
         server.get("/auth/auth", {
             headers: { "Api_Token": Store.get('Api_Token')}
         }).then(response => {
-            Store.set('user', { 
+            Store.set('auth', { 
                 username: response.data.username,
                 avatar: response.data.avatar,
                 email: response.data.email,
                 gender: response.data.gender,
-                roleId: response.data.roleId,
+                role: response.data.role,
                 introduction: response.data.introduction,
             });
             Store.set('logined', true);
@@ -38,5 +37,5 @@ function ready() {
 ready().then(() => { 
     ReactDOM.render(<App />, document.getElementById("root"))
 }).catch(()=>{
-    ReactDOM.render(<App />, document.getElementById("root"))
+    ReactDOM.render(<AppUnLogin />, document.getElementById("root"))
 });

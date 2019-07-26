@@ -50,7 +50,7 @@ class HeadMenu extends React.Component {
                     <Menu theme="dark" mode="horizontal" style={{ fontSize: "18px", display:"flex", alignItems: "center", flexGrow:1  }}>
                         { MenuItems.map(item => (
                             <Menu.Item key={ item.key } style={{ height:"80px", display:"flex", alignItems: "center" }}>
-                                <Link to={item.url}>{ item.descritipn }</Link>
+                                { item.descritipn }
                             </Menu.Item>
                         )) }
                     </Menu>
