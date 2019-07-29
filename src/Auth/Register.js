@@ -87,14 +87,15 @@ class Register extends React.Component {
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Input 
+                    <Input.Password
                         prefix={ <Icon type="lock" style={{ color:"rgba(0, 0, 0, 0.25)" }} /> }
                         placeholder="Password"
                         onChange={ e => {this.setState({password: e.target.value})} }
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Input
+                    <Input.Password
+
                         prefix={ <Icon type="lock" style={{ color:"rgba(0, 0, 0, 0.25)" }} /> }
                         placeholder="Repeat Password"
                         onChange={ e => {this.setState({repeatPassword: e.target.value})} }

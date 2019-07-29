@@ -59,7 +59,7 @@ class Login extends React.Component {
                         { getFieldDecorator('password', {
                             rules: [{ required: true, message: 'Please input your password' }],
                         }) (
-                            <Input 
+                            <Input.Password
                                 prefix={ <Icon type="lock" style={{ color:'rgba(0, 0, 0, 0.25)' }} /> }
                                 type="password"
                                 placeholder="Password"
