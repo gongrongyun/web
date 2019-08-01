@@ -17,23 +17,21 @@ class App extends React.Component {
   
     return (
       <Router>
-        <div style={{ width:"100%", height:"100vh" }}>
-            <Layout className="mainContainer">
-              { Store.get('logined') ? <SiderMenu /> : null }
-              <Layout>
-                  <Layout.Content>
-                    <Switch>
-                      <Route exact path="/" component={ () => <Redirect to={ Store.get('auth').role.alias} /> } />
-                      <Route path="/user" component={ UserRouter } />
-                      <Route path="/admin" component={ AdminRouter } />
-                    </Switch>
-                  </Layout.Content>
-                  <Layout.Footer>
-                    <Footer/>
-                  </Layout.Footer>
-              </Layout>
+          <Layout className="mainContainer">
+            <SiderMenu />
+            <Layout>
+                <Layout.Content>
+                  <Switch>
+                    <Route exact path="/" component={ () => <Redirect to={ Store.get('auth').role.alias} /> } />
+                    <Route path="/user" component={ UserRouter } />
+                    <Route path="/admin" component={ AdminRouter } />
+                  </Switch>
+                </Layout.Content>
+                <Layout.Footer>
+                  <Footer/>
+                </Layout.Footer>
             </Layout>
-        </div>
+          </Layout>
         </Router>
     )
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import img from '../resources/qkteam.png';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Avatar } from 'antd';
 import { Link } from "react-router-dom";
 import Store from "store";
 
@@ -45,10 +45,12 @@ class Sider extends React.Component {
     }
 
     render() {
+        const imgUrl = Store.get('auth').avatar;
+
         return (
             <Layout.Sider theme="dark" collapsible collapsed={ this.state.collapsed } onCollapse={ this.onCollapse }>
                 <div className="sider-logo" >
-                    <img alt={ "avatar" } src={ Store.get('auth').avatar || img } className="sider-avatar"/>
+                    <Avatar alt={ "avatar" } src={ imgUrl ? `http://localhost:8000/storage/${imgUrl}` : img } className="sider-avatar"/>
                     <span>{ this.state.collapsed ? "" : Store.get('auth').username }</span>
                 </div>
                 <Menu 
