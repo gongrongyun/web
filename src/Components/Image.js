@@ -68,7 +68,7 @@ class Image extends React.Component {
                 className="upload"
                 multiple={ false }
             >
-                { this.state.imageUrl ? <img alt="avatar" src={ `http://localhost:8000/storage/${this.state.imageUrl}` } style={{ width:"100%" }} /> : uploadButton }
+                { this.state.imageUrl ? <img alt="avatar" src={ `http://localhost:8000/static/${this.state.imageUrl}` } style={{ width:"100%" }} /> : uploadButton }
             </Upload>
         )
     }

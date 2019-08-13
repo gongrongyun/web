@@ -99,8 +99,8 @@ class Info extends React.Component {
                                 size="large" 
                                 onChange={ e => {this.setState({gender: parseInt(e.target.value)})} }
                             >
-                                <Radio.Button value="1">男</Radio.Button>
-                                <Radio.Button value="0">女</Radio.Button>
+                                <Radio.Button value="2">男</Radio.Button>
+                                <Radio.Button value="1">女</Radio.Button>
                             </Radio.Group>
                         </div>
                         <div style={{ width:"50%", marginTop:"40px" }}>
