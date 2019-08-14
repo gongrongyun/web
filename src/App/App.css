@@ -13,6 +13,10 @@
   height: 40px;
 }
 
+.sider-username {
+  margin-left: 20px;
+}
+
 .headmenu-logo {
   display: flex;
   width: 120px;

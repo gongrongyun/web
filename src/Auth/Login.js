@@ -1,6 +1,5 @@
 import React from "react";
 import { Form, Input, Icon, Checkbox, Button, message } from "antd";
-import { Link } from "react-router-dom";
 import server from "../server";
 import CryptoJs from "crypto-js";
 import Store from "store";
@@ -70,9 +69,9 @@ class Login extends React.Component {
                             valuePropName: 'checked',
                             initialValue: true,
                         })(<Checkbox>Remember me</Checkbox>) }
-                        <a style={{ float:"right" }} onClick={ this.props.forgot }>
+                        <Button type="link" style={{ float:"right" }} onClick={ this.props.forgot }>
                             Forgot password
-                        </a>
+                        </Button>
                         <Button
                             type="primary"
                             htmlType="submit"
@@ -80,7 +79,7 @@ class Login extends React.Component {
                             loading={ this.state.loading }
                             onClick={ this.handleSubmit }
                         >Login in</Button>
-                        <a onClick={ this.props.register }>register now!</a>
+                        <Button type="link" onClick={ this.props.register }>register now!</Button>
                     </Form.Item>
                 </Form>
         )

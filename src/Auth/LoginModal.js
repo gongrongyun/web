@@ -1,6 +1,5 @@
 import React from  "react";
 import { Modal } from "antd";
-import { Route, Switch } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 import Forgot from "./Forgot";
@@ -44,11 +43,6 @@ class LoginModal extends React.Component {
                 { this.state.label === "Login" ? <Login register={ this.switchToRegister } forgot={ this.switchToForgot } /> : null }
                 { this.state.label === "Register" ? <Register /> : null }
                 { this.state.label === "Forgot" ? <Forgot login={ this.switchToLogin } /> : null }
-                {/* <Switch>
-                    <Route path="/auth/login" render={ props => <Login {...props} register={ this.switchToRegister } forgot={ this.switchToForgot } /> } />
-                    <Route path="/auth/register" component={ Register } />
-                    <Route path="/auth/forgot" render={ props => <Forgot {...props} login={ this.switchToLogin } /> } />
-                </Switch> */}
             </Modal>
         )
     }

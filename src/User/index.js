@@ -17,7 +17,7 @@ class UserRouter extends React.Component {
                 <Route path="/user/study" component={ Study } />
                 <Route path="/user/life" component={ Life } />
                 <Route path="/user/technology" component={ Technology }/>
-                <Route path="/user/info" component={ Info } />
+                <Route path="/user/info" component={ props => <Info {...props} getNewInfo={this.props.getNewInfo} /> } />
                 <Route path="/user/friend" component={ Friends } />
                 <Route path="/user/notification" component={ Notification } />
             </Switch>

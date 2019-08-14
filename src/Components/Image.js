@@ -38,7 +38,7 @@ class Image extends React.Component {
             server.put('user/profile', {
                 avatar: response.filename,
             }).then(response => {
-                window.location.reload();
+                this.props.getNewInfo();
             }).catch(error => {
                 message.error((error.response && error.response.data.message) || "更改头像出错咯");
             })

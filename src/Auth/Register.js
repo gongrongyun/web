@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Icon, Col, Button, Row, message } from "antd";
+import { Form, Input, Icon, Button, message } from "antd";
 import server from "../server";
 import CryptoJS from "crypto-js";
 import VerifyCode from "./VerifyCode";

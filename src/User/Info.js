@@ -40,24 +40,28 @@ class Info extends React.Component {
     }
 
     changeProfile = () => {
-        if(this.state.username.length < 3 || this.state.username.length > 10) {
+        const username = this.state.username.trim();
+        if(username.length < 3 || username.length > 10) {
             message.error("用户名长度必须在3~10个单位内哦");
             return;
         }
+        if(this.state.introduction.trim().length > 50) {
+            message.error("简介不能超过50个单位哦");
+            return
+        }
         server.put("user/profile", {
-            username: this.state.username,
+            username: this.state.username.trim(),
             gender: this.state.gender,
-            introduction: this.state.introduction,
+            introduction: this.state.introduction.trim(),
         }).then(response => {
             message.success("信息修改成功哦");
-            window.location.reload();
+            this.props.getNewInfo();
         }).catch(error => {
             message.error(error.response.data.message || "出错了哦");
         })
     }
 
     render() {
-        console.log(this.state.introduction);
         return (
             <div className="info-container" >
                 <div className="info-header">
@@ -74,7 +78,7 @@ class Info extends React.Component {
                     className="info-card"
                 >
                     <div style={{ display:'flex', justifyContent:"center", width:"100%" }}>
-                        <Image src={ window.auth.avatar } />
+                        <Image src={ window.auth.avatar } getNewInfo={ this.props.getNewInfo } />
                     </div>
                 </Card>
                 <Card
@@ -123,7 +127,7 @@ class Info extends React.Component {
                     <div className="info-password">
                         <div style={{ marginTop: "40px", width:"50%" }} >
                             <p><strong>旧密码</strong></p>
-                            <Input 
+                            <Input.Password
                                 type="password"
                                 size="large"
                                 onChange={ e => {this.setState({oldPassword: e.target.value})} }
@@ -131,7 +135,7 @@ class Info extends React.Component {
                         </div>
                         <div style={{ marginTop: "40px", width:"50%" }} >
                             <p><strong>新密码</strong></p>
-                            <Input 
+                            <Input.Password
                                 type="password"
                                 size="large"
                                 onChange={ e => {this.setState({newPassword: e.target.value})} }
@@ -139,7 +143,7 @@ class Info extends React.Component {
                         </div>
                         <div style={{ marginTop: "40px", width:"50%" }} >
                             <p><strong>重复密码</strong></p>
-                            <Input 
+                            <Input.Password
                                 type="password"
                                 size="large"
                                 onChange={ e => {this.setState({repeatPassword: e.target.value})} }

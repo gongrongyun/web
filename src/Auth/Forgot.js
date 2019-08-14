@@ -1,6 +1,5 @@
 import React from "react";
-import { Form, Input, Icon, Button, message, Row, Col } from "antd";
-import { Link } from "react-router-dom";
+import { Form, Input, Icon, Button, message } from "antd";
 import server from "../server";
 import CryptoJS from "crypto-js";
 import VerifyCode from "./VerifyCode";
@@ -83,7 +82,7 @@ class Forgot extends React.Component {
                         type="primary"
                         onClick={ this.handleSubmit }
                     >Submit</Button>
-                    <a onClick={ this.props.login } >Login now</a>
+                    <Button type="link" onClick={ this.props.login } >Login now</Button>
                 </Form.Item>
             </Form>
         )

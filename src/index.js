@@ -4,7 +4,6 @@ import './index.css';
 import server from "./server"; 
 import App from './App/App';
 import { Spin } from 'antd';
-import Store from "store";
 import AppUnLogin from './App/AppUnLogin';
 
 ReactDOM.render((
@@ -15,9 +14,7 @@ ReactDOM.render((
 
 const ready = () => {
     return new Promise((resolve, reject) => {
-        server.get("/auth/auth", {
-            headers: { "Api_Token": Store.get('Api_Token')}
-        }).then(response => {
+        server.get("/auth/auth").then(response => {
             window.auth = response.data;
             resolve();
         }).catch(error => {
