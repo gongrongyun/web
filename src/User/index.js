@@ -12,7 +12,7 @@ class UserRouter extends React.Component {
     render() {
         return (
             <Switch>
-                <Route exact path="user/" component={ () => <Redirect to="/user/comprehensive" /> } />
+                <Route exact path="/user" component={ () => <Redirect to="/user/comprehensive" /> } />
                 <Route path="/user/comprehensive" component={ Comprehensive } />
                 <Route path="/user/study" component={ Study } />
                 <Route path="/user/life" component={ Life } />

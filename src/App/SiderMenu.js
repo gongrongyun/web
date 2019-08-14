@@ -11,18 +11,14 @@ class Sider extends React.Component {
             collapsed: false,
         }
         this.menuItems = [
-            { key: `${window.auth.role.alias}/info`, icon: "user", description: "个人中心" },
-            { key: `${window.auth.role.alias}/friend`, icon: "team", description: "我的好友" },
-            { key: `${window.auth.role.alias}/notification`, icon: "notification", description: "消息中心" },
+            { key: `/${window.auth.role.alias}/info`, icon: "user", description: "个人中心" },
+            { key: `/${window.auth.role.alias}/friend`, icon: "team", description: "我的好友" },
+            { key: `/${window.auth.role.alias}/notification`, icon: "notification", description: "消息中心" },
         ];
     }
 
     onCollapse = collapsed => {
         this.setState({ collapsed })
-    }
-
-    redirect = ({key}) => {
-        window.location.href = `/${key}`;
     }
 
     defaultSelectedKey = () => {
@@ -57,13 +53,15 @@ class Sider extends React.Component {
                     mode="inline" 
                     theme="dark"
                     defaultSelectedKeys={ [this.defaultSelectedKey() ]}
-                    onClick={ this.redirect }
                 >
                     { this.menuItems.map((item) => (
                         <Menu.Item key={ item.key }>
-                            <Icon type={ item.icon }></Icon>
-                            <span>{ item.description }</span>
+                             <Link to={ item.key }>
+                                <Icon type={ item.icon }></Icon>
+                                <span>{ item.description }</span>
+                            </Link>
                         </Menu.Item>
+                       
                     )) }
                 </Menu>
             </Layout.Sider>

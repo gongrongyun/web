@@ -5,7 +5,6 @@ import { Layout } from 'antd';
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import UserRouter from "../User";
 import AdminRouter from "../Admin";
-import Store from "store";
 import Footer from "./Footer";
 
 class App extends React.Component {

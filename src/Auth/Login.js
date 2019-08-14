@@ -29,7 +29,6 @@ class Login extends React.Component {
             this.setState({
                 loading: false,
             })
-            Store.set('logined', true);
             Store.set('Api_Token', response.data.token);
 
             window.location.href = "/";
