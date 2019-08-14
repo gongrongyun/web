@@ -15,9 +15,9 @@ class LoginModal extends React.Component {
 
     handleCancel = () => {
         this.props.cancel();
-        let href = window.location.href.split("/");
-        href.splice(href.indexOf("auth"));
-        window.location.href = href.join("/");
+        setTimeout(() => {
+            this.setState({label:"Login"})
+        }, 1000);
     }
 
     switchToLogin = () => {
@@ -41,11 +41,14 @@ class LoginModal extends React.Component {
                 style={{ maxWidth:"350px" }}
                 footer=""
             >
-                <Switch>
+                { this.state.label === "Login" ? <Login register={ this.switchToRegister } forgot={ this.switchToForgot } /> : null }
+                { this.state.label === "Register" ? <Register /> : null }
+                { this.state.label === "Forgot" ? <Forgot login={ this.switchToLogin } /> : null }
+                {/* <Switch>
                     <Route path="/auth/login" render={ props => <Login {...props} register={ this.switchToRegister } forgot={ this.switchToForgot } /> } />
                     <Route path="/auth/register" component={ Register } />
                     <Route path="/auth/forgot" render={ props => <Forgot {...props} login={ this.switchToLogin } /> } />
-                </Switch>
+                </Switch> */}
             </Modal>
         )
     }

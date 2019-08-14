@@ -1,7 +1,6 @@
 import React from 'react';
 import logo from '../resources/qkteam.png';
 import { Menu, Input, Popover, Button } from 'antd';
-import { Link } from "react-router-dom";
 import LoginModal from "../Auth/LoginModal"
 
 class HeadMenu extends React.Component {
@@ -59,7 +58,7 @@ class HeadMenu extends React.Component {
                     </div>
                     <div  className="headmenu-login">
                         <Popover content={ popoverContent } placement="bottom">
-                            <Link to="/auth/login"><Button  
+                            <Button  
                                 icon="user"
                                 size="large" 
                                 type="ghost" 
@@ -67,7 +66,6 @@ class HeadMenu extends React.Component {
                                 shape="circle" 
                                 onClick={ this.showModal } 
                             />
-                            </Link>
                         </Popover>
                         <LoginModal visible={ this.state.visible } cancel={ this.hideModal } />
                     </div>

@@ -18,15 +18,7 @@ const ready = () => {
         server.get("/auth/auth", {
             headers: { "Api_Token": Store.get('Api_Token')}
         }).then(response => {
-            Store.set('auth', { 
-                username: response.data.username,
-                avatar: response.data.avatar,
-                email: response.data.email,
-                gender: response.data.gender,
-                role: response.data.role,
-                introduction: response.data.introduction,
-            });
-            Store.set('logined', true);
+            window.auth = response.data;
             resolve();
         }).catch(error => {
             reject();

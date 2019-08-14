@@ -11,9 +11,9 @@ class Sider extends React.Component {
             collapsed: false,
         }
         this.menuItems = [
-            { key: `${Store.get('auth').role.alias}/info`, icon: "user", description: "个人中心" },
-            { key: `${Store.get('auth').role.alias}/friend`, icon: "team", description: "我的好友" },
-            { key: `${Store.get('auth').role.alias}/notification`, icon: "notification", description: "消息中心" },
+            { key: `${window.auth.role.alias}/info`, icon: "user", description: "个人中心" },
+            { key: `${window.auth.role.alias}/friend`, icon: "team", description: "我的好友" },
+            { key: `${window.auth.role.alias}/notification`, icon: "notification", description: "消息中心" },
         ];
     }
 
@@ -26,12 +26,12 @@ class Sider extends React.Component {
     }
 
     defaultSelectedKey = () => {
-        if(window.location.href === `/${Store.get('auth').role.alias}`) {
-            return `${Store.get('auth').role.alias}/comprehensive`;
+        if(window.location.href === `/${window.auth.role.alias}`) {
+            return `${window.auth.role.alias}/comprehensive`;
         }
         const menu = this.menuItems.find(o => window.location.href.match(o.key)) || {};
         if (!this.isVisibleForCurrentRoute(menu)) {
-        window.location.href = `/${Store.get('auth').role.alias}`;
+        window.location.href = `/${window.auth.role.alias}`;
         }
         return menu.key;
     }
@@ -41,17 +41,17 @@ class Sider extends React.Component {
         if (visibility.length === 0) {
             return true;
         }
-        return visibility.indexOf(Store.get('auth').role.alias) !== -1;
+        return visibility.indexOf(window.auth.role.alias) !== -1;
     }
 
     render() {
-        const imgUrl = Store.get('auth').avatar;
+        const imgUrl = window.auth.avatar;
 
         return (
             <Layout.Sider theme="dark" collapsible collapsed={ this.state.collapsed } onCollapse={ this.onCollapse }>
                 <div className="sider-logo" >
                     <Avatar alt={ "avatar" } src={ imgUrl ? `http://localhost:8000/static/${imgUrl}` : img } className="sider-avatar"/>
-                    <span>{ this.state.collapsed ? "" : Store.get('auth').username }</span>
+                    <span>{ this.state.collapsed ? "" : window.auth.username }</span>
                 </div>
                 <Menu 
                     mode="inline" 

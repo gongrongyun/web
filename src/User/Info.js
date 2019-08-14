@@ -10,9 +10,9 @@ class Info extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: Store.get('auth').username,
-            gender: Store.get('auth').gender,
-            introduction: Store.get('auth').introduction,
+            username: window.auth.username,
+            gender: window.auth.gender,
+            introduction: window.auth.introduction,
             oldPassword: "",
             newPassword: "",
             repeatPassword: "",
@@ -21,7 +21,6 @@ class Info extends React.Component {
 
     logout = () => {
         Store.set('Api_Token', null);
-        Store.set('logined', false);
         window.location.href = "/";
     }
 
@@ -75,7 +74,7 @@ class Info extends React.Component {
                     className="info-card"
                 >
                     <div style={{ display:'flex', justifyContent:"center", width:"100%" }}>
-                        <Image src={ Store.get('auth').avatar } />
+                        <Image src={ window.auth.avatar } />
                     </div>
                 </Card>
                 <Card

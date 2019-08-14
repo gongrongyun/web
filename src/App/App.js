@@ -22,7 +22,7 @@ class App extends React.Component {
             <Layout>
                 <Layout.Content>
                   <Switch>
-                    <Route exact path="/" component={ () => <Redirect to={ Store.get('auth').role.alias} /> } />
+                    <Route exact path="/" component={ () => <Redirect to={ window.auth.role.alias} /> } />
                     <Route path="/user" component={ UserRouter } />
                     <Route path="/admin" component={ AdminRouter } />
                   </Switch>

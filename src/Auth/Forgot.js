@@ -83,7 +83,7 @@ class Forgot extends React.Component {
                         type="primary"
                         onClick={ this.handleSubmit }
                     >Submit</Button>
-                    <Link to="/auth/login" onClick={ this.login } >Login now</Link>
+                    <a onClick={ this.props.login } >Login now</a>
                 </Form.Item>
             </Form>
         )

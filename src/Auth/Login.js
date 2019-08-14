@@ -21,7 +21,7 @@ class Login extends React.Component {
         server.post("auth/login", {
             username: this.props.form.getFieldValue("username"),
             password: CryptoJs.SHA1(this.props.form.getFieldValue("password")).toString(),
-            remember: this.props.form.getFieldValue("checked"),
+            remember: this.props.form.getFieldValue("remember"),
         }).then(response => {
             if(response.status === 200) {
                 message.success("登陆成功");
@@ -67,13 +67,13 @@ class Login extends React.Component {
                         ) }
                     </Form.Item>
                     <Form.Item>
-                        { getFieldDecorator('member', {
+                        { getFieldDecorator('remember', {
                             valuePropName: 'checked',
                             initialValue: true,
                         })(<Checkbox>Remember me</Checkbox>) }
-                        <Link style={{ float:"right" }} to="/auth/forgot" onClick={ this.props.forgot }>
+                        <a style={{ float:"right" }} onClick={ this.props.forgot }>
                             Forgot password
-                        </Link>
+                        </a>
                         <Button
                             type="primary"
                             htmlType="submit"
@@ -81,7 +81,7 @@ class Login extends React.Component {
                             loading={ this.state.loading }
                             onClick={ this.handleSubmit }
                         >Login in</Button>
-                        <Link to="/auth/register" onClick={ this.props.register }>register now!</Link>
+                        <a onClick={ this.props.register }>register now!</a>
                     </Form.Item>
                 </Form>
         )
