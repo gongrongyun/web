@@ -38,6 +38,7 @@ class App extends React.Component {
                     <Route exact path="/" component={ () => <Redirect to={ window.auth.role.alias} /> } />
                     <Route path="/user" component={props => <UserRouter {...props } getNewInfo={ this.getNewInfo }/> } />
                     <Route path="/admin" component={ AdminRouter } />
+                    <Route component={ () => <Redirect to={ window.auth.role.alias }/> } />
                   </Switch>
                 </Layout.Content>
                 <Layout.Footer>

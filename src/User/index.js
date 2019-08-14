@@ -1,14 +1,17 @@
-import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import Comprehensive from "../Components/Comprehensive";
-import Study from "../Components/Study";
-import Life from "../Components/Life";
-import Technology from "../Components/Technology";
-import Info from "./Info";
-import Friends from "./Friends";
-import Notification from "./Notification";
+import React from "react"
+import { Switch, Route, Redirect } from "react-router-dom"
+import Comprehensive from "../Components/Comprehensive"
+import Study from "../Components/Study"
+import Life from "../Components/Life"
+import Technology from "../Components/Technology"
+import Info from "./Info"
+import Friends from "./Friends"
+import Notification from "./Notification"
+import ArticleCreate from "./ArticleCreate"
+import ArticleProcess from "./articleProcess"
 
 class UserRouter extends React.Component {
+
     render() {
         return (
             <Switch>
@@ -20,6 +23,9 @@ class UserRouter extends React.Component {
                 <Route path="/user/info" component={ props => <Info {...props} getNewInfo={this.props.getNewInfo} /> } />
                 <Route path="/user/friend" component={ Friends } />
                 <Route path="/user/notification" component={ Notification } />
+                <Route path="/user/articleCreate" component={ ArticleCreate } />
+                <Route path="/user/articleProcess" component={ ArticleProcess } />
+                <Route component={ () => <Redirect to="/user/comprehensive" /> } />
             </Switch>
         )
     }
