@@ -39,7 +39,7 @@ class Sider extends React.Component {
     }
 
     isVisibleForCurrentRoute = (o) => {
-        const visibility = "visibility" in o ? o.visibility : null;
+        const visibility = o && "visibility" in o ? o.visibility : null;
         if (visibility === null) {
             return true;
         }
