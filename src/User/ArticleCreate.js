@@ -101,7 +101,12 @@ class ArticleCreate extends React.Component {
                 children.push(<Select.Option key={value+Math.random()} value={ value } >{value}</Select.Option>)
             });
         }
-        const articleTypes = ["综合", "学习", "生活", "科技"];
+        const articleTypes = [
+            { key:"comprehensive", description:"综合" },
+            { key:"study", description:"学习" }, 
+            { key:"life", description:"生活" }, 
+            { key:"technology", description:"科技"}
+        ];
         return(
             <div className="articleCreate">
                 <div className="articleCreate-header">
@@ -134,7 +139,11 @@ class ArticleCreate extends React.Component {
                                 size="large"
                                 onChange={ value => this.setState({articleType: value}) }
                             >
-                                { articleTypes.map(value => (<Select.Option value={value} key={value} >{value}</Select.Option>)) }
+                                { articleTypes.map(item => (
+                                    <Select.Option value={item.key} key={item.key} >
+                                        {item.description}
+                                    </Select.Option>
+                                )) }
                                 <Select.Option value="disabled" disabled>未开放</Select.Option>
                             </Select>
                             <Select 
