@@ -1,7 +1,7 @@
 import React from "react"
 import BraftEditor from "braft-editor"
 import 'braft-editor/dist/index.css'
-import { Card, Button, message } from "antd"
+import { Card, Button, message, Modal, Select, Popover } from "antd"
 import server from "../server"
 import Store from "store"
 
@@ -10,6 +10,7 @@ class ArticleCreate extends React.Component {
         super(props)
         this.state = {
             editorState: undefined,
+            articleType: "",
             header: "",
             tags: "",
         }
@@ -20,6 +21,7 @@ class ArticleCreate extends React.Component {
             editorState: BraftEditor.createEditorState(Store.get("editorState") || null),
             header: Store.get("header") || null,
             tags: Store.get("tags") || null,
+            articleType: Store.get("articleType") || null,
         });
     }
 
@@ -28,22 +30,32 @@ class ArticleCreate extends React.Component {
             message.error("标题过长咯");
             return
         }
-        const tags = this.state.tags.split("/");
-        if(tags.length > 7) {
+        if(this.state.tags.length > 7) {
             message.error("标签数太多咯");
             return
         }
         server.post("/article/create", {
             header: this.state.header,
-            tags: this.state.tags,
+            tags: this.state.tags.join("/"),
+            articleType: this.state.articleType,
             htmlContent: this.state.editorState.toHTML(),
             rawContent: this.state.editorState.toRAW(),
         }).then(response => {
             Store.remove("editorState");
             Store.remove("header");
+            Store.remove("articleType");
             Store.remove("tags");
         })
-        
+    }
+
+    confirm = () => {
+        Modal.confirm({
+            title: "温馨提示",
+            content:"文章马上就要发表咯，请确认",
+            okText: "确定",
+            cancelText: "取消",
+            onOk: this.handle
+        })
     }
 
     handleEditorChange = (editorState) => {
@@ -52,22 +64,37 @@ class ArticleCreate extends React.Component {
 
     saveContent = () => {
         Store.set("editorState", this.state.editorState.toRAW());
+        Store.set("articleType", this.state.articleType);
         Store.set("header", this.state.header);
         Store.set("tags", this.state.tags);
         message.success("保存成功咯");
     }
 
     render() {
+        const tags = Store.get("tags");
+        const children = [];
+        if(tags) {
+            tags.forEach(value => {
+                children.push(<Select.Option key={value+Math.random()} value={ value } >{value}</Select.Option>)
+            });
+        }
         return(
             <div className="articleCreate">
+                <div className="articleCreate-header">
+                    <Popover placement="bottom" content={ "保存一下，方便下一次编辑哦" } >
+                        <Button className="articleCreate-button" size="large" type="default" onClick={ this.saveContent }>保存</Button>
+                    </Popover>
+                    <Popover placement="bottom" content={ "赶紧让更多人看到吧" }>
+                        <Button className="articleCreate-button" size="large" type="primary" onClick={ this.confirm }>发表</Button>
+                    </Popover>
+                </div>
                 <Card
                     title="写作"
                     className="articleCreate-card"
-                    extra={ <Button size="large" type="primary" onClick={ this.handle }>发表</Button>  }
                 >
                     <div>
                         <div>
-                            <span style={{ fontSize:"25px" }} >标题:</span>
+                            <span style={{ fontSize:"20px" }} >标题:</span>
                             <input
                                 defaultValue={ this.state.header }
                                 placeholder="UC练习场"
@@ -76,17 +103,30 @@ class ArticleCreate extends React.Component {
                             />
                         </div>
                         <div>
-                            <span style={{ fontSize:"25px" }} >标签:</span>
-                            <input
-                                defaultValue={ this.state.tags }
-                                placeholder="用些简短的词汇来描述你的文章吧"
-                                className="articleCreate-input"
-                                onChange={ e => this.setState({tags: e.target.value}) }
-                            />
+                            <span style={{ fontSize:"20px" }} >标签:</span>
+                            <Select
+                                defaultValue={ Store.get("articleType") || "综合" } 
+                                style={{ width:"100px", marginLeft:"30px" }} 
+                                size="large"
+                                onChange={ value => this.setState({articleType: value}) }
+                            >
+                                <Select.Option value="综合">综合</Select.Option>
+                                <Select.Option value="学习">学习</Select.Option>
+                                <Select.Option value="生活">生活</Select.Option>
+                                <Select.Option value="科技">科技</Select.Option>
+                                <Select.Option value="disabled" disabled>未开放</Select.Option>
+                            </Select>
+                            <Select 
+                                mode="tags" 
+                                style={{ width:"80%" }}
+                                defaultValue={ Store.get("tags") }
+                                size="large"
+                                onChange={ value => this.setState({tags: value}) }
+                            >{ children }</Select>
                         </div>
                     </div>
                     <div style={{ marginTop:"30px" }}>
-                        <span style={{ fontSize:"24px" }} >正文:</span>
+                        <span style={{ fontSize:"20px" }} >正文:</span>
                         <BraftEditor
                             placeholder="开始你的创作吧。。。"
                             value={ this.state.editorState }
