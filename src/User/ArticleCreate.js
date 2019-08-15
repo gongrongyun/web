@@ -11,7 +11,7 @@ class ArticleCreate extends React.Component {
         this.state = {
             editorState: undefined,
             articleType: "",
-            header: "",
+            title: "",
             tags: "",
         }
     }
@@ -19,33 +19,56 @@ class ArticleCreate extends React.Component {
     componentDidMount() {
         this.setState({
             editorState: BraftEditor.createEditorState(Store.get("editorState") || null),
-            header: Store.get("header") || null,
+            title: Store.get("title") || null,
             tags: Store.get("tags") || null,
-            articleType: Store.get("articleType") || null,
+            articleType: Store.get("articleType") || "综合",
         });
     }
 
     handle = () => {
-        if(this.state.header.length > 30) {
-            message.error("标题过长咯");
-            return
-        }
-        if(this.state.tags.length > 7) {
-            message.error("标签数太多咯");
+        if(!this.validateAll()) {
             return
         }
         server.post("/article/create", {
-            header: this.state.header,
+            title: this.state.title,
             tags: this.state.tags.join("/"),
-            articleType: this.state.articleType,
-            htmlContent: this.state.editorState.toHTML(),
-            rawContent: this.state.editorState.toRAW(),
+            article_type: this.state.articleType,
+            html_content: this.state.editorState.toHTML(),
+            raw_content: this.state.editorState.toRAW(),
         }).then(response => {
             Store.remove("editorState");
-            Store.remove("header");
+            Store.remove("title");
             Store.remove("articleType");
             Store.remove("tags");
+            message.success("请耐心等待审核哦")
+        }).catch(error => {
+            message.error("出错了哦")
         })
+    }
+
+    validateAll = () => {
+        const title = this.state.title;
+        const tags = this.state.tags;
+        if(title.length > 30) {
+            message.error("标题过长咯");
+            return false
+        }
+        if(!title) {
+            message.error("标题不能为空哦");
+        }
+        if(tags.length > 7) {
+            message.error("标签数太多咯");
+            return false
+        }
+        if(tags.length == 0) {
+            message.error("要给文章贴上标签才能发表哦");
+            return false
+        }
+        if(this.state.editorState.isEmpty()) {
+            message.error("文章内容不能为空哦")
+            return false
+        }
+        return true
     }
 
     confirm = () => {
@@ -65,7 +88,7 @@ class ArticleCreate extends React.Component {
     saveContent = () => {
         Store.set("editorState", this.state.editorState.toRAW());
         Store.set("articleType", this.state.articleType);
-        Store.set("header", this.state.header);
+        Store.set("title", this.state.title);
         Store.set("tags", this.state.tags);
         message.success("保存成功咯");
     }
@@ -78,6 +101,7 @@ class ArticleCreate extends React.Component {
                 children.push(<Select.Option key={value+Math.random()} value={ value } >{value}</Select.Option>)
             });
         }
+        const articleTypes = ["综合", "学习", "生活", "科技"];
         return(
             <div className="articleCreate">
                 <div className="articleCreate-header">
@@ -96,10 +120,10 @@ class ArticleCreate extends React.Component {
                         <div>
                             <span style={{ fontSize:"20px" }} >标题:</span>
                             <input
-                                defaultValue={ this.state.header }
+                                defaultValue={ this.state.title }
                                 placeholder="UC练习场"
                                 className="articleCreate-input"
-                                onChange={ e => this.setState({header: e.target.value}) }
+                                onChange={ e => this.setState({title: e.target.value}) }
                             />
                         </div>
                         <div>
@@ -110,10 +134,7 @@ class ArticleCreate extends React.Component {
                                 size="large"
                                 onChange={ value => this.setState({articleType: value}) }
                             >
-                                <Select.Option value="综合">综合</Select.Option>
-                                <Select.Option value="学习">学习</Select.Option>
-                                <Select.Option value="生活">生活</Select.Option>
-                                <Select.Option value="科技">科技</Select.Option>
+                                { articleTypes.map(value => (<Select.Option value={value} key={value} >{value}</Select.Option>)) }
                                 <Select.Option value="disabled" disabled>未开放</Select.Option>
                             </Select>
                             <Select 
