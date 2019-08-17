@@ -29,7 +29,7 @@ class ArticleCreate extends React.Component {
         if(!this.validateAll()) {
             return
         }
-        server.post("/article/create", {
+        server.post("/article/", {
             title: this.state.title,
             tags: this.state.tags.join("/"),
             article_type: this.state.articleType,
