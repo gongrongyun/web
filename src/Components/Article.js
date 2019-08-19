@@ -14,23 +14,25 @@ class Article extends React.Component{
 	}
 
 	componentWillMount() {
-		server.get(`user/profile/${this.props.article.user_id}`).then(response => {
-			this.setState({
-				author: response.data,
-				loading: false,
-			});
-		}).catch(error => {
-			console.log(error);
-		})
+        if(!this.props.visibilty) {
+            server.get(`user/profile/${this.props.article.user_id}`).then(response => {
+                this.setState({
+                    author: response.data,
+                    loading: false,
+                });
+            }).catch(error => {
+                console.log(error);
+            })
+        }
 	}
 
 	render() {
 		const tags = this.props.article.tags.split("/");
 
         const content = (
-            <div>
-                <p>邮箱:{ this.state.author.email }</p>
-                <p>签名:{ this.state.author.introduction }</p>
+            <div style={{ maxWidth:"200px" }} >
+                <p>{ "邮箱: " + this.state.author.email }</p>
+                <p>{ "签名: " + (this.state.author.introduction || "暂无") }</p>
             </div>
         );
 
@@ -42,9 +44,9 @@ class Article extends React.Component{
         )
 
 		return (
-			<Card style={{ width:"760px", marginTop:"16px" }} >
+			<Card style={{ width:"750px", marginTop:"16px" }} >
                 <Card.Meta
-                    avatar={ 
+                    avatar={ this.props.visibilty ? null :
                         <Popover
                             title={ title }
                             content={ content }
@@ -71,7 +73,7 @@ class Article extends React.Component{
                 >
                 </Card.Meta>
                 <div style={{ marginTop:"20px" }}>
-                    <span style={{ marginLeft:"45px" }} >
+                    <span style={{ marginLeft:this.props.visibilty ? "0px" : "45px" }} >
                         创建于: &nbsp;
                         { new Date(this.props.article.created_at).toDateString() }
                     </span>
