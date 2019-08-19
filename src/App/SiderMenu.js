@@ -18,6 +18,13 @@ class Sider extends React.Component {
             { key: `/${window.auth.role.alias}/articleCreate`, description: "创作文章", visibility: "user"},
             { key: `/${window.auth.role.alias}/articleProcess`, description: "审核进程", visibility: "user"},
         ];
+        this.articleTypeMentItems = [
+            { key: `/${window.auth.role.alias}/all`, description: "全部" },
+            { key: `/${window.auth.role.alias}/comprehensive`, description: "综合" },
+            { key: `/${window.auth.role.alias}/study`, description: "学习" },
+            { key: `/${window.auth.role.alias}/life`, description: "生活" },
+            { key: `/${window.auth.role.alias}/technology`, description: "科技" }
+        ]
     }
 
     onCollapse = collapsed => {
@@ -31,6 +38,9 @@ class Sider extends React.Component {
         let menu = this.menuItems.find(o => window.location.href.match(o.key));
         if(!menu) {
             menu = this.articleSubMenuItems.find(o => window.location.href.match(o.key));
+        }
+        if(!menu) {
+            menu = this.articleTypeMentItems.find(o => window.location.href.match(o.key))
         }
         if (!this.isVisibleForCurrentRoute(menu)) {
             window.location.href = `/${window.auth.role.alias}`;
@@ -50,7 +60,7 @@ class Sider extends React.Component {
         return (
             <Layout.Sider theme="dark" collapsible collapsed={ this.state.collapsed } onCollapse={ this.onCollapse }>
                 <div className="sider-logo" >
-                    <Avatar alt={ "avatar" } src={ this.props.avatar ? `http://localhost:8000/static/${this.props.avatar}` : img } className="sider-avatar"/>
+                    <Avatar alt={ "avatar" } src={ this.props.avatar ? `http://localhost:8000/static/images/${this.props.avatar}` : img } className="sider-avatar"/>
                     <span className="sider-username">{ this.state.collapsed ? "" : this.props.username }</span>
                 </div>
                 <Menu 
@@ -58,6 +68,23 @@ class Sider extends React.Component {
                     theme="dark"
                     defaultSelectedKeys={ [this.defaultSelectedKey() ]}
                 >
+                    <Menu.SubMenu
+                        key="articleType"
+                        title={
+                            <span>
+                                <Icon type="bars" />
+                                <span>首页文章</span>
+                            </span>
+                        }
+                    >
+                        { this.articleTypeMentItems.map((item) => (
+                            <Menu.Item key={ item.key }>
+                                <Link to={ item.key }>
+                                    <span>{ item.description }</span>
+                                </Link>
+                            </Menu.Item>
+                        )) }
+                    </Menu.SubMenu>
                     <Menu.SubMenu
                         key="article"
                         title={

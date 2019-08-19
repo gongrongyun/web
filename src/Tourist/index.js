@@ -1,9 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Comprehensive from "../Components/Comprehensive";
-import Study from "../Components/Study";
-import Life from "../Components/Life";
-import Technology from "../Components/Technology";
+import ShowBoard from "../Components/ShowBoard";
 
 class TouristRouter extends React.Component {
     constructor(props) {
@@ -14,10 +11,11 @@ class TouristRouter extends React.Component {
         return (
             <Switch>
                 <Route path="tourist/" component={ () => <Redirect to="tourist/comprehensive" /> } />
-                <Route path="tourist/comprehensive" component={ Comprehensive } />
-                <Route path="tourist/study" component={ Study } />
-                <Route path="tourist/life" component={ Life } />
-                <Route path="tourist/technology" component={ Technology }/>
+                <Route path="tourist/comprehensive" component={ ShowBoard } />
+                <Route path="tourist/study" component={ ShowBoard } />
+                <Route path="tourist/life" component={ ShowBoard } />
+                <Route path="tourist/technology" component={ ShowBoard }/>
+                <Route path="tourist/all" component={ ShowBoard } />
             </Switch>
         )
     }
