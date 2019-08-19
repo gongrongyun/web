@@ -21,7 +21,7 @@ class ArticleCreate extends React.Component {
             editorState: BraftEditor.createEditorState(Store.get("editorState") || null),
             title: Store.get("title") || null,
             tags: Store.get("tags") || null,
-            articleType: Store.get("articleType") || "综合",
+            articleType: Store.get("articleType") || "comprehensive",
         });
     }
 
