@@ -13,11 +13,11 @@ class UserRouter extends React.Component {
         return (
             <Switch>
                 <Route exact path="/user" component={ () => <Redirect to="/user/all" /> } />
-                <Route path="/user/all" component={ ShowBoard } />
-                <Route path="/user/comprehensive" component={ ShowBoard } />
-                <Route path="/user/study" component={ ShowBoard } />
-                <Route path="/user/life" component={ ShowBoard } />
-                <Route path="/user/technology" component={ ShowBoard }/>
+                <Route path="/user/all" component={ props => <ShowBoard {...props} articleType={ "all" } /> } />
+                <Route path="/user/comprehensive" component={ props => <ShowBoard {...props} articleType={ "comprehensive" } /> } />
+                <Route path="/user/study" component={ props => <ShowBoard {...props} articleType={ "study" } /> } />
+                <Route path="/user/life" component={ props => <ShowBoard {...props} articleType={ "life" } /> } />
+                <Route path="/user/technology" component={ props => <ShowBoard {...props} articleType={ "technology" } /> }/>
                 <Route path="/user/info" component={ props => <Info {...props} getNewInfo={this.props.getNewInfo} /> } />
                 <Route path="/user/friend" component={ Friends } />
                 <Route path="/user/notification" component={ Notification } />

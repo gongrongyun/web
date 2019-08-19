@@ -41,9 +41,9 @@ class App extends React.Component {
                     <Route component={ () => <Redirect to={ window.auth.role.alias }/> } />
                   </Switch>
                 </Layout.Content>
-                <Layout.Footer>
+                {/* <Layout.Footer>
                   <Footer/>
-                </Layout.Footer>
+                </Layout.Footer> */}
             </Layout>
           </Layout>
         </Router>
