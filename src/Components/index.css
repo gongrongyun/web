@@ -4,3 +4,15 @@
     flex-direction: column;
     align-items: center;
 }
+
+.showBoard-board {
+    width: 80%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pagination {
+    margin-top: 30px;
+}
