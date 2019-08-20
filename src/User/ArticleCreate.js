@@ -1,7 +1,7 @@
 import React from "react"
 import BraftEditor from "braft-editor"
 import 'braft-editor/dist/index.css'
-import { Card, Button, message, Modal, Select, Popover } from "antd"
+import { Card, Button, message, Modal, Select, Tooltip } from "antd"
 import server from "../server"
 import Store from "store"
 
@@ -60,7 +60,7 @@ class ArticleCreate extends React.Component {
             message.error("标签数太多咯");
             return false
         }
-        if(tags.length == 0) {
+        if(tags.length === 0) {
             message.error("要给文章贴上标签才能发表哦");
             return false
         }
@@ -109,16 +109,17 @@ class ArticleCreate extends React.Component {
         ];
         return(
             <div className="articleCreate">
-                <div className="articleCreate-header">
-                    <Popover placement="bottom" content={ "保存一下，方便下一次编辑哦" } >
-                        <Button className="articleCreate-button" size="large" type="default" onClick={ this.saveContent }>保存</Button>
-                    </Popover>
-                    <Popover placement="bottom" content={ "赶紧让更多人看到吧" }>
-                        <Button className="articleCreate-button" size="large" type="primary" onClick={ this.confirm }>发表</Button>
-                    </Popover>
-                </div>
                 <Card
-                    title="写作"
+                    title={
+                        <Tooltip  title="保存一下，方便下一次编辑哦">
+                            <Button className="articleCreate-button" size="large" type="default" onClick={ this.saveContent }>保存</Button>
+                        </Tooltip>
+                    }
+                    extra={
+                        <Tooltip title="赶紧让更多人看到吧">
+                            <Button className="articleCreate-button" size="large" type="primary" onClick={ this.confirm }>发表</Button>
+                        </Tooltip>
+                    }
                     className="articleCreate-card"
                 >
                     <div>
@@ -126,7 +127,7 @@ class ArticleCreate extends React.Component {
                             <span style={{ fontSize:"20px" }} >标题:</span>
                             <input
                                 defaultValue={ this.state.title }
-                                placeholder="UC练习场"
+                                placeholder="练习场"
                                 className="articleCreate-input"
                                 onChange={ e => this.setState({title: e.target.value}) }
                             />

@@ -61,7 +61,7 @@ class ShowBoard extends React.Component {
                     { this.state.loading ? <Empty/>  : this.state.articles.map((article) => (
                         <Article key={ article.id } article={ article } visibilty={false} />
                     ))}
-                    { this.state.articles.length == 0 ? null : 
+                    { this.state.articles.length === 0 ? null : 
                         <Pagination 
                             className="pagination" 
                             defaultCurrent={1} 

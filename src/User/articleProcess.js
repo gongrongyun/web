@@ -55,11 +55,11 @@ class ArticleProcess extends React.Component {
                         <Radio.Button value={1} >已通过</Radio.Button>
                         <Radio.Button value={-1} >未通过</Radio.Button>
                     </Radio.Group>
-                    { this.state.articles.length == 0 ? <Empty style={{ marginTop:"30px", width:"735px" }} /> : 
+                    { this.state.articles.length === 0 ? <Empty style={{ marginTop:"30px", width:"735px" }} /> : 
                         this.state.articles.map((article) => (
                             <Article article={ article } key={article.id} visibilty={true} />
                     )) }
-                    { this.state.articles.length == 0 ? null :
+                    { this.state.articles.length === 0 ? null :
                         <Pagination 
                             className="pagination" 
                             defaultCurrent={1}

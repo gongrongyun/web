@@ -6,6 +6,7 @@ import Friends from "./Friends"
 import Notification from "./Notification"
 import ArticleCreate from "./ArticleCreate"
 import ArticleProcess from "./articleProcess"
+import ArticleDetail from "../Components/ArticleDetail"
 
 class UserRouter extends React.Component {
 
@@ -23,6 +24,7 @@ class UserRouter extends React.Component {
                 <Route path="/user/notification" component={ Notification } />
                 <Route path="/user/articleCreate" component={ ArticleCreate } />
                 <Route path="/user/articleProcess" component={ ArticleProcess } />
+                <Route path="/user/articleDetail/:article_id" component={ ArticleDetail } />
                 <Route component={ () => <Redirect to="/user/all" /> } />
             </Switch>
         )

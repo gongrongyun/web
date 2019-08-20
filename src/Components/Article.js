@@ -49,6 +49,13 @@ class Article extends React.Component{
             "-1": "red/未通过",
         }
 
+        const articleType = {
+            "comprehensive" : "综合",
+            "technology" : "科技",
+            "study": "学习",
+            "life": "生活",
+        };
+
         const reviewedState = reviewed[this.props.article.reviewed].split("/");
 
 		return (
@@ -68,8 +75,9 @@ class Article extends React.Component{
                     }
                     title={
                         <div>
-                            <Link to={ `articleDetail/${this.props.article.id}` }>{ this.props.article.title }</Link>
+                            <Link to={ `/${window.auth.role.alias || "tourist"}/articleDetail/${this.props.article.id}` }>{ this.props.article.title }</Link>
                             { this.props.visibilty ? <Tag color={ reviewedState[0] } style={{ float:"right" }} >{ reviewedState[1] }</Tag> : null}
+                            <Tag color="cyan" style={{ float:"right" }} >{articleType[this.props.article.article_type]}</Tag>
                         </div>
                     }
                     description={ tags.map((value)  => (

@@ -47,7 +47,7 @@
 
 .articleCreate-card {
     width: 90%;
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 30px;
 }
 
@@ -57,7 +57,7 @@
     margin-left: 30px;
     width: 88%;
     height: 50px;
-    font-size: 20px;
+    font-size: 18px;
     border-style: solid;
     border-top-width: 0px;
     border-right-width: 0px; 
@@ -66,18 +66,10 @@
     outline-style: none;
 }
 
-.articleCreate-header {
-    margin-top: 40px;
-    margin-bottom: -110px;
-    z-index: 1;
-}
 
 .articleCreate-button {
     margin-left: 60px;
     margin-right: 60px;
-}
-.ant-card-head-title {
-    font-size: 30px;
 }
 
 body .bf-content{
