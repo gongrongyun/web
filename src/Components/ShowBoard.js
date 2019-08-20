@@ -61,14 +61,17 @@ class ShowBoard extends React.Component {
                     { this.state.loading ? <Empty/>  : this.state.articles.map((article) => (
                         <Article key={ article.id } article={ article } visibilty={false} />
                     ))}
-                    <Pagination 
-                        className="pagination" 
-                        defaultCurrent={1} 
-                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
-                        onChange={ this.changePage }
-                        pageSize={ 7 }
-                        total={ this.state.total } 
-                    />
+                    { this.state.articles.length == 0 ? null : 
+                        <Pagination 
+                            className="pagination" 
+                            defaultCurrent={1} 
+                            showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+                            onChange={ this.changePage }
+                            pageSize={ 7 }
+                            total={ this.state.total } 
+                        />
+                    }
+                    
                 </Card>
             </div>
         )

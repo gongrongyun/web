@@ -5,7 +5,7 @@ import Info from "./Info"
 import Friends from "./Friends"
 import Notification from "./Notification"
 import ArticleCreate from "./ArticleCreate"
-import ArticleProcess from "./ArticleProcess"
+import ArticleProcess from "./articleProcess"
 
 class UserRouter extends React.Component {
 

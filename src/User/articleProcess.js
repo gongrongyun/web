@@ -1,6 +1,6 @@
 import React from "react"
 import server from "../server"
-import { Card, Radio, Pagination } from "antd"
+import { Card, Radio, Pagination, Empty } from "antd"
 import Article from "../Components/Article"
 
 class ArticleProcess extends React.Component {
@@ -48,23 +48,28 @@ class ArticleProcess extends React.Component {
                     className="articleProcess-card"
                 >
                     <Radio.Group 
-                        defaultValue={false}
+                        defaultValue={0}
                         buttonStyle="solid" 
                         onChange={ e => { this.setState({reviewed:e.target.value}, function(){this.getData()}) } } >
-                        <Radio.Button value={false} >审核中</Radio.Button>
-                        <Radio.Button value={true} >已通过</Radio.Button>
+                        <Radio.Button value={0} >审核中</Radio.Button>
+                        <Radio.Button value={1} >已通过</Radio.Button>
+                        <Radio.Button value={-1} >未通过</Radio.Button>
                     </Radio.Group>
-                    { this.state.articles.map((article) => (
-                        <Article article={ article } key={article.id} visibilty={true} />
+                    { this.state.articles.length == 0 ? <Empty style={{ marginTop:"30px", width:"735px" }} /> : 
+                        this.state.articles.map((article) => (
+                            <Article article={ article } key={article.id} visibilty={true} />
                     )) }
-                    <Pagination 
-                        className="pagination" 
-                        defaultCurrent={1}
-                        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
-                        onChange={ this.changePage }
-                        pageSize={ 7 }
-                        total={ this.state.total }
-                    />
+                    { this.state.articles.length == 0 ? null :
+                        <Pagination 
+                            className="pagination" 
+                            defaultCurrent={1}
+                            showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+                            onChange={ this.changePage }
+                            pageSize={ 7 }
+                            total={ this.state.total }
+                            style={{ float:"right" }}
+                        />
+                    }
                 </Card>
             </div>
         )

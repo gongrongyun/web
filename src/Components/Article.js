@@ -43,6 +43,14 @@ class Article extends React.Component{
             </div>
         )
 
+        const reviewed = {
+            "1": "green/已通过",
+            "0": "orange/审核中",
+            "-1": "red/未通过",
+        }
+
+        const reviewedState = reviewed[this.props.article.reviewed].split("/");
+
 		return (
 			<Card style={{ width:"750px", marginTop:"16px" }} >
                 <Card.Meta
@@ -61,10 +69,7 @@ class Article extends React.Component{
                     title={
                         <div>
                             <Link to={ `articleDetail/${this.props.article.id}` }>{ this.props.article.title }</Link>
-                            { this.props.visibilty ? ( 
-                                this.props.article.reviewed ? <Tag color="green" style={{ float:"right" }} >审核已通过</Tag> : 
-                                    <Tag color="orange" style={{ float:"right" }} >审核中</Tag>
-                            ) : null}
+                            { this.props.visibilty ? <Tag color={ reviewedState[0] } style={{ float:"right" }} >{ reviewedState[1] }</Tag> : null}
                         </div>
                     }
                     description={ tags.map((value)  => (
